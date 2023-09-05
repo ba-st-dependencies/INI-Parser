@@ -1,0 +1,10 @@
+RwLoadSpecificationV2 {
+  #specName: 'INI-Parser-Deployment',
+  #projectName : 'INI-Parser',
+  #diskUrl : '/opt/gemstone/projects/INI-Parser',
+  #projectSpecFile : 'rowan/project.ston',
+  #componentNames : [
+    'Deployment'
+  ],
+  #comment : 'Loading spec for Deployment'
+}
