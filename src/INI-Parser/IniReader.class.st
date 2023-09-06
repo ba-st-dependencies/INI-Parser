@@ -227,7 +227,7 @@ IniReader >> parseKeyValuePair [
 		[ readStream atEnd or: [ (readStream peek = Character cr) | (readStream peek = Character lf) ] ] 
 			whileFalse: [ stream nextPut: self parseCharacter ] ].
 
-	^ { key trim. value trim. }
+	^ { key trimBoth. value trimBoth. }
 ]
 
 { #category : #parsing }
