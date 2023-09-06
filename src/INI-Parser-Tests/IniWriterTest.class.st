@@ -4,22 +4,28 @@ Class {
 	#category : #'INI-Parser-Tests'
 }
 
+{ #category : #support }
+IniWriterTest >> newDictionary [
+
+	^ OrderedDictionary new
+]
+
 { #category : #tests }
 IniWriterTest >> testWrite [
 
 	| d s expected |
-	d := Dictionary new
-		     at: 'default' put: (Dictionary new
+	d := self newDictionary
+		     at: 'default' put: (self newDictionary
 				      at: 'key' put: 'value';
 				      yourself);
-		     at: '' put: (Dictionary new
+		     at: '' put: (self newDictionary
 			      at: 'global' put: 'global value';
 			      yourself);
 		     yourself.
 
 	s := IniWriter toString: d.
 
-	expected := String streamContents: [ :stream | 
+	expected := String streamContents: [ :stream |
 		            stream
 			            nextPutAll: 'global = global value';
 			            crlf;
@@ -36,18 +42,18 @@ IniWriterTest >> testWrite [
 IniWriterTest >> testWriteMultipleSections [
 
 	| d s expected |
-	d := Dictionary new
-		     at: 'default' put: (Dictionary new
+	d := self newDictionary
+		     at: 'default' put: (self newDictionary
 				      at: 'key' put: 'value';
 				      yourself);
-		     at: 'subsection' put: (Dictionary new
+		     at: 'subsection' put: (self newDictionary
 			      at: 'overwrite' put: true;
 			      yourself);
 		     yourself.
 
 	s := IniWriter toString: d.
 
-	expected := String streamContents: [ :stream | 
+	expected := String streamContents: [ :stream |
 		            stream
 			            nextPutAll: '[subsection]';
 			            crlf;
