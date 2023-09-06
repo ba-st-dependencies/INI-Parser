@@ -1,6 +1,8 @@
 RwSimpleProjectLoadComponentV2 {
 	#name : 'Deployment',
-	#projectNames : [ ],
+	#projectNames : [ 
+		'Buoy'
+	],
 	#componentNames : [ ],
 	#packageNames : [
 		'INI-Parser'
@@ -13,6 +15,5 @@ RwSimpleProjectLoadComponentV2 {
 				}
 			}
 	 	}
-	},
-	#comment : ''
+	}
 }
