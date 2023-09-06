@@ -32,7 +32,7 @@ IniWriter >> nextPut: aDictionary [
 	"Write the contents of the dictionary to the stream"
 
 	aDictionary associationsDo: [ :keyAndValue | 
-		keyAndValue value isDictionary
+		(keyAndValue value isA: OrderedDictionary)
 			ifTrue: [ 
 				keyAndValue key isEmpty ifFalse: [ 
 					stream
