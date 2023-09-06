@@ -82,7 +82,7 @@ IniReader >> expectChar: character [
 { #category : #'instance creation' }
 IniReader >> initialize [
 	super initialize .
-	data := Dictionary new.
+	data := OrderedDictionary new.
 ]
 
 { #category : #configuration }
@@ -130,7 +130,7 @@ IniReader >> parse [
 		char := readStream peek.
 		char = $[ ifTrue: [ 
 			section := self parseSection.
-			data at: section put: Dictionary new.
+			data at: section put: OrderedDictionary new.
 			char := readStream peek ].
 		char = $; ifTrue: [ 
 			self parseComment.
