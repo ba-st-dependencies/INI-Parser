@@ -1,0 +1,20 @@
+RwSimpleProjectLoadComponentV2 {
+	#name : 'Tests',
+	#condition : 'tests',
+	#projectNames : [ ],
+	#componentNames : [
+		'Deployment'
+	],
+	#packageNames : [
+		'INI-Parser-Tests'
+	],
+	#conditionalPackageMapSpecs : {
+		'gemstone' : {
+			'allusers' : {
+				#packageNameToPlatformPropertiesMap : {
+    				'INI-Parser-Tests' : { 'symbolDictName' : 'INI-Parser' }
+				}
+			}
+	 	}
+	}
+}

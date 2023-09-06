@@ -1,0 +1,19 @@
+RwSimpleProjectLoadComponentV2 {
+	#name : 'Deployment',
+	#projectNames : [ 
+		'Buoy'
+	],
+	#componentNames : [ ],
+	#packageNames : [
+		'INI-Parser'
+	],
+	#conditionalPackageMapSpecs : {
+		'gemstone' : {
+			'allusers' : {
+				#packageNameToPlatformPropertiesMap : {
+    				'INI-Parser' : { 'symbolDictName' : 'INI-Parser' }
+				}
+			}
+	 	}
+	}
+}

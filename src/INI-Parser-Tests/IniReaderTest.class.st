@@ -4,12 +4,18 @@ Class {
 	#category : #'INI-Parser-Tests'
 }
 
+{ #category : #support }
+IniReaderTest >> newDictionary [
+
+	^ OrderedDictionary new
+]
+
 { #category : #tests }
 IniReaderTest >> testEmptyValueDontEatNextKeyValuePair [
 
 	| reader parsed expected |
-	expected := Dictionary new.
-	expected at: '' put: Dictionary new.
+	expected := self newDictionary.
+	expected at: '' put: self newDictionary.
 	expected at: '' at: 'server' put: ''.
 	expected at: '' at: 'port' put: '143'.
 
@@ -21,41 +27,44 @@ IniReaderTest >> testEmptyValueDontEatNextKeyValuePair [
 
 { #category : #tests }
 IniReaderTest >> testParse [
-	| r v expected |	
-		
-	expected := Dictionary new.
-	expected at: 'Section' put: Dictionary new.
-	expected at: 'Section' at: 'key' put: 'value'.
-		
-	r := IniReader on: ('[Section]',Character lf asString ,'key=value') readStream .
-	v := r parse .
-	
-	self assert: v equals: expected .
-	
-	r := IniReader on: ('[Section]',Character lf asString ,Character lf asString, 'key = value') readStream .
-	v := r parse .
 
-	self assert: v equals: expected .
-	
-	expected := Dictionary new.
-	expected at: 'Section' put: Dictionary new.
+	| r v expected |
+	expected := self newDictionary.
+	expected at: 'Section' put: self newDictionary.
+	expected at: 'Section' at: 'key' put: 'value'.
+
+	r := IniReader on:
+		     ('[Section]' , Character lf asString , 'key=value') readStream.
+	v := r parse.
+
+	self assert: v equals: expected.
+
+	r := IniReader on:
+		     ('[Section]' , Character lf asString , Character lf asString
+		      , 'key = value') readStream.
+	v := r parse.
+
+	self assert: v equals: expected.
+
+	expected := self newDictionary.
+	expected at: 'Section' put: self newDictionary.
 	expected at: 'Section' at: 'key' put: 'value'.
 	expected at: 'Section' at: 'key2' put: 'value2'.
-		
-	r := IniReader on: ('[Section]',Character lf asString , 'key = value', Character lf asString,'key2 = value2') readStream .
-	v := r parse .
 
-	self assert: v equals: expected .
-	
+	r := IniReader on:
+		     ('[Section]' , Character lf asString , 'key = value'
+		      , Character lf asString , 'key2 = value2') readStream.
+	v := r parse.
 
+	self assert: v equals: expected
 ]
 
 { #category : #tests }
 IniReaderTest >> testParseEmptySection [
 
 	| tmp1 tmp2 tmp3 tmp4 |
-	tmp4 := Dictionary new.
-	tmp4 at: 'Section' put: Dictionary new.
+	tmp4 := self newDictionary.
+	tmp4 at: 'Section' put: self newDictionary.
 	tmp2 := IniReader on:
 		        ('[Section]' , Character lf asString) readStream.
 	tmp3 := tmp2 parse.
@@ -66,13 +75,13 @@ IniReaderTest >> testParseEmptySection [
 IniReaderTest >> testParseGlobalKeyValues [
 
 	| reader parsed expected |
-
-	expected := Dictionary new.
-	expected at: '' put: Dictionary new.
+	expected := self newDictionary.
+	expected at: '' put: self newDictionary.
 	expected at: '' at: 'server' put: '192.0.2.62'.
 	expected at: '' at: 'port' put: '143'.
 
-	reader := IniReader on: 'server=192.0.2.62<l>port=143' expandMacros readStream.
+	reader := IniReader on:
+		          'server=192.0.2.62<l>port=143' expandMacros readStream.
 	parsed := reader parse.
 
 	self assert: parsed equals: expected
@@ -120,19 +129,19 @@ IniReaderTest >> testParseSection [
 
 { #category : #tests }
 IniReaderTest >> testParseTwoKeyValue [
-	| r v expected |	
-		
-	
-	expected := Dictionary new.
-	expected at: 'Section' put: Dictionary new.
+
+	| r v expected |
+	expected := self newDictionary.
+	expected at: 'Section' put: self newDictionary.
 	expected at: 'Section' at: 'key' put: 'value'.
 	expected at: 'Section' at: 'key2' put: 'value2'.
-		
-	r := IniReader on: ('[Section]',Character lf asString , 'key = value', Character lf asString,'key2 = value2') readStream .
-	v := r parse .
 
-	self assert: v equals: expected .
-	
+	r := IniReader on:
+		     ('[Section]' , Character lf asString , 'key = value'
+		      , Character lf asString , 'key2 = value2') readStream.
+	v := r parse.
+
+	self assert: v equals: expected
 ]
 
 { #category : #tests }
@@ -148,10 +157,10 @@ key = value
 key2 = value2' readStream.
 	v := r parse.
 
-	expected := Dictionary new.
-	expected at: 'Section' put: Dictionary new.
+	expected := self newDictionary.
+	expected at: 'Section' put: self newDictionary.
 	expected at: 'Section' at: 'key' put: 'value'.
-	expected at: 'Section2' put: Dictionary new.
+	expected at: 'Section2' put: self newDictionary.
 	expected at: 'Section2' at: 'key2' put: 'value2'.
 
 	self assert: v equals: expected
@@ -161,14 +170,13 @@ key2 = value2' readStream.
 IniReaderTest >> testParseTwoSectionsWithCommentAfterSection [
 
 	| r v expected |
-
 	r := IniReader on:
 		     '[database]<l>; use IP address in case network name resolution is not working<l>server=192.0.2.62<l>port=143'
 			     expandMacros readStream.
 	v := r parse.
 
-	expected := Dictionary new.
-	expected at: 'database' put: Dictionary new.
+	expected := self newDictionary.
+	expected at: 'database' put: self newDictionary.
 	expected at: 'database' at: 'server' put: '192.0.2.62'.
 	expected at: 'database' at: 'port' put: '143'.
 
@@ -185,8 +193,8 @@ key = value
 
 	v := r parse.
 
-	expected := Dictionary new.
-	expected at: 'Section' put: Dictionary new.
+	expected := self newDictionary.
+	expected at: 'Section' put: self newDictionary.
 	expected at: 'Section' at: 'key' put: 'value'.
 
 
@@ -199,12 +207,12 @@ IniReaderTest >> testParseWithCommentedSection [
 	| r v expected |
 	r := IniReader on:
 		     ('[Section]' , Character lf asString , 'key = value'
-		      , Character lf asString , '#[Section2]' , Character lf asString
-		      , 'key2 = value2') readStream.
+		      , Character lf asString , '#[Section2]'
+		      , Character lf asString , 'key2 = value2') readStream.
 	v := r parse.
 
-	expected := Dictionary new.
-	expected at: 'Section' put: Dictionary new.
+	expected := self newDictionary.
+	expected at: 'Section' put: self newDictionary.
 	expected at: 'Section' at: 'key' put: 'value'.
 	expected at: 'Section' at: 'key2' put: 'value2'.
 
@@ -243,15 +251,15 @@ key = value
 
 	v := r parse.
 
-	expected := Dictionary new.
-	expected at: '' put: Dictionary new.
+	expected := self newDictionary.
+	expected at: '' put: self newDictionary.
 	expected at: '' at: 'globalValue' put: '11111'.
-	expected at: 'Section' put: Dictionary new.
+	expected at: 'Section' put: self newDictionary.
 	expected at: 'Section' at: 'key' put: 'value'.
-	expected at: 'Section2' put: Dictionary new.
+	expected at: 'Section2' put: self newDictionary.
 	expected at: 'Section2' at: 'key' put: 'value'.
 	expected at: 'Section2' at: 'anotherKey' put: 'value'.
-	expected at: 'Section 3' put: Dictionary new.
+	expected at: 'Section 3' put: self newDictionary.
 	expected at: 'Section 3' at: 'key' put: 'value'.
 
 	self assert: v equals: expected
