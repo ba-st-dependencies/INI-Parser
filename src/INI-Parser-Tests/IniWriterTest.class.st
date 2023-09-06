@@ -15,12 +15,12 @@ IniWriterTest >> testWrite [
 
 	| d s expected |
 	d := self newDictionary
-		     at: 'default' put: (self newDictionary
-				      at: 'key' put: 'value';
-				      yourself);
 		     at: '' put: (self newDictionary
 			      at: 'global' put: 'global value';
 			      yourself);
+		     at: 'default' put: (self newDictionary
+				      at: 'key' put: 'value';
+				      yourself);
 		     yourself.
 
 	s := IniWriter toString: d.
@@ -43,12 +43,12 @@ IniWriterTest >> testWriteMultipleSections [
 
 	| d s expected |
 	d := self newDictionary
-		     at: 'default' put: (self newDictionary
-				      at: 'key' put: 'value';
-				      yourself);
 		     at: 'subsection' put: (self newDictionary
 			      at: 'overwrite' put: true;
 			      yourself);
+		     at: 'default' put: (self newDictionary
+				      at: 'key' put: 'value';
+				      yourself);
 		     yourself.
 
 	s := IniWriter toString: d.
