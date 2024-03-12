@@ -1,8 +1,9 @@
 # INI Parser
 
-A fork of [INI Parser](https://github.com/ctSkennerton/INI-Parser) to be used as a dependency in [ba-st](https://github.com/ba-st) for GS/64 & Pharo.
+A fork of [INI Parser](https://github.com/ctSkennerton/INI-Parser) to be used as
+a dependency in [ba-st](https://github.com/ba-st) for GS/64 & Pharo.
 
-The `upstream` branch is supposed to track the changes in the `master` branch of [ctSkennerton/INI-Parser](https://github.com/juliendectSkennertonlplanque/INI-Parser)
+The `upstream` branch is supposed to track the changes in the `master` branch of [ctSkennerton/INI-Parser](https://github.com/ctSkennerton/INI-Parser)
 
 The `release-candidate` is the branch where our changes land before releasing a version.
 
